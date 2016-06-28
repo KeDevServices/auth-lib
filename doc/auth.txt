@@ -1,0 +1,54 @@
+
+Authentifizierung und Identifikation
+====================================
+
+Authentifizierung
+-----------------
+
+Bei der Authentifizierung können zwei Fälle unterschieden werden:
+* Die Authentifizierung von Benutzern am System. Das geschieht in
+  der Regel über die Komminikation eines Web-Browsers mit einem
+  Service.
+* Authentifizierung von Services bei Inter-Service-Kommunikation.
+
+Das Kommunikationsprotokoll ist in beiden Fällen HTTP, sodass die
+Authentifizierung grundsätzlich auf die gleiche Art und Weise erfolgen
+kann. Um das HAndling so einfach wie möglich zu machen werden allerdings
+mehrere Authentifizierungsmöglichkeiten bereitgestellt:
+
+* Authentifizierung über Username/Passwort
+    * Entweder mit Standard-Header (BASIC Auth)
+    * Oder im "VC-Authorization"-Header, mit gleicher Syntax
+* Authentifizierung über ein Authentifizierungs-Token (AuthToken)
+    * Entweder in einem Cookie (VC-Auth-Token)
+    * Oder in einem "VC-Auth-Token"-Header
+
+
+Mit Username/Passwort
+---------------------
+
+Wenn Authentifizierung per Username/Passwort genutzt wird, muss
+ein UserRepository bereitgestellt werden, welches die eigentliche
+Authentifizierung macht.
+
+Empfehlung: Mit Username/Passwort sollte man sich im Produktivsystem
+nicht anmelden können. Nur auf Entwicklungs- und Testsystemen sollte
+diese Methode erlaubt werden.
+
+
+Mit Auth-Token
+--------------
+
+Auth-Token ist die empfohlene Authentifizierungsmethode. Mit dem
+AuthTokenManager können Tokens erstellt werden (z.B. von Systemusern
+oder durch Funktionalität in einem Login-Screen). Das Token kann
+dann bei jeder Request mitgeschickt werden.
+
+
+Identifikation
+--------------
+
+Zur Identifikation kann ein persistentes Cookie gesetzt werden. Dieses
+besteht aus einer zufälligen UUID. Die persistente Id hängt nicht mit
+der Authentifizierung zusammen, bzw. ein solcher Zusammenhang muss von
+der jeweiligen Anwendung hergestellt werden.

@@ -1,0 +1,4 @@
+
+- persistent cookie should be persistent
+
+- auth cookie should be temporary

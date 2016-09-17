@@ -4,7 +4,7 @@ organization := "eu.kedev"
 
 name := "auth-lib"
 
-version := "0.0.13"
+version := "0.0.14"
 
 scalaVersion in ThisBuild := "2.11.7"
 

@@ -42,10 +42,14 @@ object AuthToken {
     * @return Some(AuthToken) or None
     */
   def decode(base64: String): Option[AuthToken] = {
-    val json = TryAndLog.warn("illegal base64 string") {
-      new String(Base64.getDecoder.decode(base64))
-    }.toOption
-    json map (x => AuthToken.format.reads(parse(x)).get)
+    (for {
+      json   <- TryAndLog.warn("illegal base64 string") {
+                  new String(Base64.getDecoder.decode(base64))
+                }
+      parsed <- TryAndLog.warn("cannot parse json") { parse(json) }
+      token  <- TryAndLog.warn("cannot read auth token") { AuthToken.format.reads(parsed) }
+    } yield token.get).toOption
+
   }
 
 }
